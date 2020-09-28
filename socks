@@ -1,0 +1,146 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+// READ CHAPTER 8
+
+class sock{
+
+  public:
+  // structure output type methodName(int store){ guts }
+    void setmnfg(string m){ // declares function called setmnfg requires string that is stored in "m"
+      string mnfg = m;
+    }
+
+    void setColor(string c){
+      string color = c;
+    }
+
+    void setSmells(bool s){
+      bool smells = s;
+    }
+
+    void setWorn(bool w){
+      bool beingWorn = w;
+    }
+
+    void setSize(char q){
+      char size = q;
+    }
+
+
+  private:
+    char size;
+    std::string color;
+    std::string mnfg;
+    bool beingWorn;
+    bool smells;
+};
+
+
+int main() {
+  int socks;
+  char choice1;
+  std::string choice2;
+  std::string choice3;
+  bool choice4;
+  bool choice5;
+
+  char repeat ('y');
+
+  int small;
+  int medium;
+  int large;
+
+
+
+
+  cout << "Welcome to the sock organizer!" << '\n';
+  cout << "You will be asked how many socks you have and their characteristics." << '\n';
+
+  cout << "How many socks?" << '\n';
+
+  cin >> socks;
+
+
+
+  vector<sock> sockList; // first sock list
+
+  sock firstSock;
+
+
+  firstSock.mnfg = "Calvin";
+  firstSock.smells = true;
+  firstSock.beingWorn = true;
+  firstSock.size = 'L';
+  firstSock.color = "White";
+
+  sockList.push_back(firstSock);
+
+
+
+  vector<std::string> colorList(socks);
+  vector<std::string> sizeList(socks);
+  vector<std::string> mnfgList(socks);
+  vector<bool> wornList(socks);
+  vector<bool> smellList(socks);
+
+
+  string codeName = "";
+
+  string sock = "";
+
+
+do {
+
+  cout << "Choose either (S)mall, (M)edium or (L)arge then press enter" << '\n';
+
+  cin >> choice1; // Mapping for choices
+    switch(choice1) {
+      case 1: sock = "s"; sizeList.push_back(sock); small ++; break;
+      case 2: sock = "m"; sizeList.push_back(sock); medium ++; break;
+      case 3: sock = "l"; sizeList.push_back(sock); large ++; break;}
+
+
+  cout << "What color is your sock?" << '\n';
+
+  cin >> choice2;
+  colorList.push_back(choice2);
+
+  cout << "Who made them?" << '\n';
+
+  cin >> choice3;
+  mnfgList.push_back(choice3);
+
+  cout << "Are you wearing them?" << '\n';
+
+  cin >> choice4;
+  wornList.push_back(choice4);
+
+  cout << "Do they smell?" << '\n';
+
+  cin >> choice5;
+  smellList.push_back(choice5);
+
+
+
+  cout << "Repeat? Y/N" << '\n';
+
+  cin >> repeat;
+
+
+}while (repeat == 'Y' || repeat == 'y');
+  
+  cout << "Printing Results..." << '\n';
+  
+  cout << "There are " << socks << " socks in total." << '\n';
+
+  for(int i = socks; i<sockList.size(); i=i+1){
+
+    cout << "A "<< sizeList[i] << " pair of socks, colored " << colorList[i] << " was manufactured by " << mnfgList[i] << ". Worn? " << wornList[i] << ". Smells? "<< smellList[i] << '\n';
+        
+  }
+
+}

@@ -1,0 +1,42 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+
+class sock{
+  public:
+    char size;
+    std::string color;
+    std::string mnfg;
+    bool beingWorn;
+    bool smells;
+};
+
+int main(){
+  sock s;
+  s.size = 's';
+  s.color = "Black";
+  s.mnfg = "Adidas";
+  s.beingWorn = true;
+  s.smells = true;
+  std::cout << s.color << s.mnfg << s.beingWorn << s.smells << s.size << '\n';
+
+  sock* m = new sock{};
+  m->size = 'm';
+  m->color = "Green";
+  m->mnfg = "Nike";
+  m->beingWorn = true;
+  m->smells = false;
+  std::cout << m->color <<  m->mnfg <<  m->beingWorn <<  m->smells <<  m->size << '\n';
+
+  sock* l = new sock{};
+  l->size = 'l';
+  l->color = "white";
+  l->mnfg = "Costco";
+  l->beingWorn = true;
+  l->smells = false;
+  std::cout << l->color <<  l->mnfg <<  l->beingWorn <<  l->smells <<  l->size << '\n';
+}

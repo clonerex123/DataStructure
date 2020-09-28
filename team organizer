@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+int main() {
+
+  cout << "Welcome to the robotics team!" << '\n';
+  cout << "You will be asked your name, education and preferred role." << '\n';
+
+  int candidates = 0;
+  int choices = 0;
+  int programmer = 0;
+  int engineer = 0;
+  int pilot = 0;
+
+  cout << "How many candidates?" << '\n';
+
+  cin >> candidates; // needs role mapping. Keys are roles, candidates are values
+
+  vector<std::string> codeNameList(candidates);
+  vector<std::string> schoolList(candidates);
+  vector<std::string> roleList(candidates);
+  string codeName = "";
+  string school = "";
+  string role = "";
+  char choice ('y');
+
+do {
+
+  cout << "Enter your first name, then press enter" << '\n';
+
+  cin >> codeName;
+  codeNameList.push_back(codeName);
+
+  cout << "Enter your place of education, then press enter" << '\n';
+
+  cin >> school;
+  schoolList.push_back(school);
+
+  cout << "Choose either (1)programmer, (2)engineer, or (3)pilot then press enter" << '\n';
+
+  cin >> choices; // Mapping for choices
+    switch(choices) {
+      case 1: role = "programmer"; roleList.push_back(role); programmer ++; break;
+      case 2: role = "engineer"; roleList.push_back(role); engineer ++; break;
+      case 3: role = "pilot"; roleList.push_back(role); pilot ++; break;}
+
+
+  cout << "Repeat? Y/N" << '\n';
+
+  cin >> choice;
+
+
+}while (choice == 'Y' || choice == 'y');
+  
+  cout << "Printing list..." << '\n';
+
+  for(int i = candidates; i<codeNameList.size(); i=i+1){
+
+    cout << codeNameList[i] << " who learned from " << schoolList[i] << " wants to be " << roleList[i] <<'\n';
+        
+  }
+  
+  cout << "There are " << programmer << " programmers, " << engineer << " engineers, and " << pilot << " pilots in total." << '\n';
+
+}
+
+// Team role idea: 3 questions needed
