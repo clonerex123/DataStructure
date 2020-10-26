@@ -1,102 +1,128 @@
-
-// C++ program to demonstrate insertion
-// in a BST recursively.
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-class BST
+struct TreeNode // builds tree structure
 {
-    int data;
-    BST* left, * right;
+    string games;
+    struct TreeNode* left;
+    struct TreeNode* right;
 
-public:
+    TreeNode(string g)
+    {
+        games = g;
+        left = nullptr;
+        right = nullptr;
+    }
 
-    // Default constructor.
-    BST();
-
-    // Parameterized constructor.
-    BST(int);
-
-    // Insert function.
-    BST* Insert(BST*, int);
-
-    // Inorder traversal.
-    void Inorder(BST*);
 };
 
-// Default Constructor definition.
-BST::BST() : data(0), left(NULL), right(NULL) {}
-
-// Parameterized Constructor definition.
-BST::BST(int value)
+void in_order_tree_walk(TreeNode* root) // method for tree
 {
-    data = value;
-    left = right = NULL;
+    if (root != nullptr)
+    {
+        in_order_tree_walk(root->left);
+        cout << root->games << '\n';
+        in_order_tree_walk(root->right);
+    }
 }
 
-// Insert function definition.
-BST* BST::Insert(BST* root, int value)
+TreeNode* insertValue(TreeNode* root, string newValue) // method for insertion
 {
-    if (!root)
+    if (root == nullptr)
     {
-        // Insert the first node, if root is NULL.
-        return new BST(value);
+        root = new TreeNode(newValue);
+        return root;
     }
-
-    // Insert data.
-    if (value > root->data)
+    if (root->games > newValue)
     {
-        // Insert right node data, if the 'value'
-        // to be inserted is greater than 'root' node data.
-
-        // Process right nodes.
-        root->right = Insert(root->right, value);
+        root->left = insertValue(root->left, newValue);
     }
-    else
-    {
-        // Insert left node data, if the 'value' 
-        // to be inserted is greater than 'root' node data.
-
-        // Process left nodes.
-        root->left = Insert(root->left, value);
+    else {
+        root->right = insertValue(root->right, newValue);
     }
-
-    // Return 'root' node, after insertion.
     return root;
 }
 
-// Inorder traversal function.
-// This gives data in sorted order.
-void BST::Inorder(BST* root)
+string leftTraversal(TreeNode* root) // method for traversing left
 {
-    if (!root)
+
+    root = root->left;
+    while (root->right != nullptr)
     {
-        return;
+        root = root->right;
     }
-    Inorder(root->left);
-    cout << root->data << endl;
-    Inorder(root->right);
+    return root->games;
 }
 
-// Driver code
-int main()
+string rightTraversal(TreeNode* root) // method for traversing right
 {
-    BST b, * root = NULL;
-    root = b.Insert(root, 50);
-    b.Insert(root, 30);
-    b.Insert(root, 20);
-    b.Insert(root, 40);
-    b.Insert(root, 70);
-    b.Insert(root, 60);
-    b.Insert(root, 80);
-    b.Insert(root, 90);
-    b.Insert(root, 100);
-    b.Insert(root, 10);
-    b.Insert(root, 24);
-    b.Insert(root, 33);
 
-    b.Inorder(root);
-    return 0;
+    root = root->right;
+    while (root->left != nullptr)
+    {
+        root = root->left;
+    }
+
+    return root->games;
 }
 
-// This code is contributed by pkthapa
+
+TreeNode* deleteValue(TreeNode* root, string value) // method for deletion
+{
+    if (root == nullptr)
+    {
+        return root;
+    }
+    if (root->games > value)
+    {
+        root->left = deleteValue(root->left, value);
+    }
+    else if (root->games < value)
+    {
+        root->right = deleteValue(root->right, value);
+    }
+    else {
+        if (root->left == nullptr && root->right == nullptr)
+        {
+            root = nullptr;
+        }
+        else if (root->left != nullptr)
+        {
+            root->games = leftTraversal(root);
+            root->left = deleteValue(root->left, root->games);
+        }
+        else {
+
+            root->games = rightTraversal(root);
+            root->right = deleteValue(root->right, root->games);
+        }
+    }
+    return root;
+}
+
+int main() { // main method
+    struct TreeNode* root = new TreeNode("The Last of Us 2");
+    root->left = new TreeNode("Command & Conquer Remastered");
+    root->right = new TreeNode("Red Dead Redemption 2");
+
+    root->left->left = new TreeNode("Among Us");
+    root->left->right = new TreeNode("Genshin Impact");
+    root->left->right->left = new TreeNode("DOOM Eternal");
+    root->left->right->right = new TreeNode("Minecraft");
+
+    root->right->left = new TreeNode("Rising Storm 2 Vietnam");
+    root->right->right = new TreeNode("Spongebob Squarepants Rehydrated");
+
+    in_order_tree_walk(root);
+    cout << '\n';
+    insertValue(root, "Rimworld");
+    insertValue(root, "Warcraft 3 Reforged");
+    cout << "Succesfully inserted Rising Storm 2 Vietnam and Warcraft 3 Reforged. The final tree structure is: " << '\n';
+    in_order_tree_walk(root);
+    cout << '\n';
+    deleteValue(root, "The Last of Us 2");
+    cout << "Succesfully deleted The Last of Us 2. The final tree structure is: " << '\n';
+    in_order_tree_walk(root);
+}
